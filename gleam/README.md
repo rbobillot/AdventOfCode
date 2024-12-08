@@ -29,7 +29,7 @@ gleam run
 
 ```sh
 # example: running solution for day 1
-gleam rum -m day1
+gleam run -m day1
 ```
 
 ### Run tests
