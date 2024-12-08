@@ -1,4 +1,5 @@
 import day1
+import day2
 import gleam/int
 import gleam/io
 import gleam/list
@@ -23,10 +24,10 @@ fn run(step: RunStep) {
     |> result.unwrap("")
     |> step.run
 
-  list.each(solved_parts, fn(part) {
+  list.index_fold(solved_parts, Nil, fn(_, part, i) {
     part
     |> int.to_string
-    |> fn(s) { "  " <> s }
+    |> fn(s) { "  part" <> int.to_string(i + 1) <> ": " <> s }
     |> io.println
   })
 }
@@ -34,7 +35,7 @@ fn run(step: RunStep) {
 pub fn main() {
   io.println("Advent Of Code 2024")
 
-  let run_steps = [RunStep("day1", day1.day1)]
+  let run_steps = [RunStep("day1", day1.day1), RunStep("day2", day2.day2)]
 
   run_steps |> list.each(run)
 }

@@ -16,4 +16,5 @@ pub fn get_input(day n: Int) -> String {
 
   simplifile.read("../misc/inputs/" <> day <> "/input.txt")
   |> result.unwrap("")
+  |> string.trim
 }
