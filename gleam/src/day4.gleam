@@ -60,16 +60,16 @@ fn get_diagonal_input(input: List(List(String)), direction: String) {
 }
 
 pub fn part2(_input: List(List(String))) {
-  0
+  -1
 }
 
 pub fn part1(input: List(List(String))) {
   let vertical_input = input |> list.transpose
-  let diagonal_left_input =
-    list.transpose(get_diagonal_input(input, "left")) |> list.map(io.debug)
-  io.println("")
-  let diagonal_right_input =
-    list.transpose(get_diagonal_input(input, "right")) |> list.map(io.debug)
+  let diagonal_left_input = list.transpose(get_diagonal_input(input, "left"))
+  // |> list.map(io.debug)
+  // io.println("")
+  let diagonal_right_input = list.transpose(get_diagonal_input(input, "right"))
+  //|> list.map(io.debug)
 
   let map =
     [input, vertical_input, diagonal_left_input, diagonal_right_input]
@@ -79,7 +79,8 @@ pub fn part1(input: List(List(String))) {
     |> dict.map_values(fn(_, v) { list.length(v) })
 
   ["XMAS", "SAMX"] |> list.filter_map(dict.get(map, _)) |> int.sum
-  0
+
+  -1
 }
 
 pub fn day4(input: String) -> List(Int) {

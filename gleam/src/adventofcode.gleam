@@ -2,10 +2,8 @@ import day1
 import day2
 import day3
 import day4
-import day6
-
-// import day4
 import day5
+import day6
 import gleam/int
 import gleam/io
 import gleam/list
@@ -45,7 +43,7 @@ pub fn main() {
     RunStep("day1", day1.day1),
     RunStep("day2", day2.day2),
     RunStep("day3", day3.day3),
-    // RunStep("day4", day4.day4),
+    RunStep("day4", day4.day4),
     RunStep("day5", day5.day5),
     RunStep("day6", day6.day6),
   ]
