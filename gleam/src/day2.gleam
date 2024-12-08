@@ -9,6 +9,16 @@ fn str_to_ints(str: String) -> List(Int) {
   str |> string.split(" ") |> list.filter_map(int.parse)
 }
 
+fn remove_elem(ls: List(a), at_index n: Int) {
+  list.index_map(ls, fn(e, idx) {
+    case idx {
+      i if i != n -> Ok(e)
+      _ -> Error(Nil)
+    }
+  })
+  |> list.filter_map(function.identity)
+}
+
 fn get_discriminant(x: Int, y: Int, disc: Int) -> Int {
   case x - y {
     n if n >= 1 && n <= 3 && disc >= 0 -> 1
@@ -33,16 +43,6 @@ fn is_safe_report(report: List(Int)) -> Int {
   tr_is_safe_report(report, 0, 0)
 }
 
-fn remove_elem(ls: List(a), at_index n: Int) {
-  list.index_map(ls, fn(e, idx) {
-    case idx {
-      i if i != n -> Ok(e)
-      _ -> Error(Nil)
-    }
-  })
-  |> list.filter_map(function.identity)
-}
-
 pub fn part2(input: List(List(Int))) -> Int {
   list.count(input, fn(report) {
     report
@@ -64,8 +64,7 @@ pub fn day2(input: String) -> List(Int) {
     |> utils.clean_input_lines
     |> list.map(str_to_ints)
 
-  [part1, part2]
-  |> list.map(fn(run) { run(report_lines) })
+  [part1(report_lines), part2(report_lines)]
 }
 
 pub fn main() {

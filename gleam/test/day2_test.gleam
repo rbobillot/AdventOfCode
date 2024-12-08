@@ -10,7 +10,7 @@ const input = "
   1 3 6 7 9
   "
 
-pub fn day1_test() {
+pub fn day2_test() {
   let part1 = 2
   let part2 = 4
 
