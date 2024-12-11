@@ -4,6 +4,7 @@ import day3
 import day4
 import day5
 import day6
+import day7
 import gleam/int
 import gleam/io
 import gleam/list
@@ -46,6 +47,7 @@ pub fn main() {
     RunStep("day4", day4.day4),
     RunStep("day5", day5.day5),
     RunStep("day6", day6.day6),
+    RunStep("day7", day7.day7),
   ]
 
   run_steps |> list.each(run)
