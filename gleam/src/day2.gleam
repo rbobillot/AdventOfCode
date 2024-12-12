@@ -1,4 +1,3 @@
-import gleam/function
 import gleam/int
 import gleam/io
 import gleam/list
@@ -9,14 +8,13 @@ fn str_to_ints(str: String) -> List(Int) {
   str |> string.split(" ") |> list.filter_map(int.parse)
 }
 
-fn remove_elem(ls: List(a), at_index n: Int) {
-  list.index_map(ls, fn(e, idx) {
-    case idx {
-      i if i != n -> Ok(e)
-      _ -> Error(Nil)
-    }
+fn remove_elem(ls: List(a), at_index n: Int) -> List(a) {
+  list.flatten({
+    use e, idx <- list.index_map(ls)
+    use _ <- list.filter([e])
+
+    idx != n
   })
-  |> list.filter_map(function.identity)
 }
 
 fn get_discriminant(x: Int, y: Int, disc: Int) -> Int {
@@ -44,14 +42,10 @@ fn is_safe_report(report: List(Int)) -> Int {
 }
 
 pub fn part2(input: List(List(Int))) -> Int {
-  list.count(input, fn(report) {
-    report
-    |> list.index_fold([], fn(acc, _, n) {
-      let candidate = remove_elem(report, n)
-      [is_safe_report(candidate), ..acc]
-    })
-    |> list.contains(0)
-  })
+  use report <- list.count(input)
+  use acc, _, n <- list.index_fold(report, False)
+
+  acc || report |> remove_elem(n) |> is_safe_report == 0
 }
 
 pub fn part1(input: List(List(Int))) -> Int {
