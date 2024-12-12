@@ -5,46 +5,43 @@ import gleam/result
 import gleam/string
 import utils
 
-pub type Tree {
-  Nil
-  Node(x: Int, left: Tree, center: Tree, right: Tree)
-}
-
 fn concat(x: Int, y: Int) -> Int {
-  { int.to_string(x) <> int.to_string(y) } |> int.parse |> result.unwrap(0)
+  { int.to_string(y) <> int.to_string(x) } |> int.parse |> result.unwrap(0)
 }
 
-fn insert(tree: Tree, n: Int) -> Tree {
-  case tree {
-    Node(x, Nil, Nil, Nil) ->
-      Node(x, insert(Nil, x + n), insert(Nil, concat(x, n)), insert(Nil, x * n))
-    Node(x, l, c, r) -> Node(x, insert(l, n), insert(c, n), insert(r, n))
-    Nil -> Node(n, Nil, Nil, Nil)
+fn calibration_candidates(
+  xs: List(Int),
+  ops: List(fn(Int, Int) -> Int),
+  res: List(Int),
+) {
+  case xs, res {
+    [h, ..t], [] -> calibration_candidates(t, ops, [h])
+    [h, ..t], _ ->
+      calibration_candidates(
+        t,
+        ops,
+        list.flat_map(res, fn(n) { list.map(ops, fn(op) { op(h, n) }) }),
+      )
+    [], _ -> res
   }
 }
 
-fn from_list(ls: List(Int)) {
-  list.fold(ls, Nil, insert)
-}
+fn total_calibrations(
+  input: List(#(Int, List(Int))),
+  ops: List(fn(Int, Int) -> Int),
+) {
+  use #(target, xs) <- list.filter_map(input)
+  use candidate <- list.find(calibration_candidates(xs, ops, []))
 
-fn exists(tree: Tree, n: Int, cc: Bool, res: Bool) {
-  case tree {
-    Nil -> res
-    Node(x, Nil, Nil, Nil) if x == n -> exists(Nil, n, cc, True)
-    Node(_, l, _, r) if !cc -> exists(l, n, cc, exists(r, n, cc, res))
-    Node(_, l, c, r) ->
-      exists(l, n, cc, exists(c, n, cc, exists(r, n, cc, res)))
-  }
+  candidate == target
 }
 
 pub fn part2(input: List(#(Int, List(Int)))) {
-  list.filter(input, fn(tup) { from_list(tup.1) |> exists(tup.0, True, False) })
-  |> list.fold(0, fn(acc, tup) { acc + tup.0 })
+  total_calibrations(input, [int.add, int.multiply, concat]) |> int.sum
 }
 
 pub fn part1(input: List(#(Int, List(Int)))) {
-  list.filter(input, fn(tup) { from_list(tup.1) |> exists(tup.0, False, False) })
-  |> list.fold(0, fn(acc, tup) { acc + tup.0 })
+  total_calibrations(input, [int.add, int.multiply]) |> int.sum
 }
 
 pub fn day7(input: String) -> List(Int) {
