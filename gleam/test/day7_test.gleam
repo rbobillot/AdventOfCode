@@ -15,7 +15,7 @@ const input = "
 
 pub fn day7_test() {
   let part1 = 3749
-  let part2 = -1
+  let part2 = 11_387
 
   input
   |> day7.day7
