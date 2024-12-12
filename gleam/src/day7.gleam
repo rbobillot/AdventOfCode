@@ -30,10 +30,10 @@ fn total_calibrations(
   input: List(#(Int, List(Int))),
   ops: List(fn(Int, Int) -> Int),
 ) {
-  use #(target, xs) <- list.filter_map(input)
-  use candidate <- list.find(calibration_candidates(xs, ops, []))
+  use #(x, nums) <- list.filter_map(input)
+  use candidate <- list.find(calibration_candidates(nums, ops, []))
 
-  candidate == target
+  candidate == x
 }
 
 pub fn part2(input: List(#(Int, List(Int)))) {
