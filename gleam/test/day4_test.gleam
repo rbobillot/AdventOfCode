@@ -14,8 +14,8 @@ const input = "
   MXMXAXMASX
   "
 
-fn day4_test() {
-  let part1 = -1
+pub fn day4_test() {
+  let part1 = 18
   let part2 = -1
 
   input
