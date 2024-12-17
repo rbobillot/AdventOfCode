@@ -36,13 +36,10 @@ fn find_xmas(input: Dict(Coord, String), part: Int, x: Int, y: Int) {
 }
 
 fn tr_solve(input: Dict(Coord, String), part: Int, x: Int, y: Int, res: Int) {
-  case dict.get(input, Coord(x, y)) {
-    Error(_) ->
-      case dict.get(input, Coord(0, y + 1)) {
-        Error(_) -> res
-        Ok(_) -> tr_solve(input, part, 0, y + 1, res)
-      }
-    Ok(_) -> tr_solve(input, part, x + 1, y, res + find_xmas(input, part, x, y))
+  case dict.has_key(input, Coord(x, y)), dict.has_key(input, Coord(0, y + 1)) {
+    False, False -> res
+    False, True -> tr_solve(input, part, 0, y + 1, res)
+    _, _ -> tr_solve(input, part, x + 1, y, res + find_xmas(input, part, x, y))
   }
 }
 
