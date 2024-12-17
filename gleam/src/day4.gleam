@@ -8,38 +8,29 @@ pub type Coord {
   Coord(x: Int, y: Int)
 }
 
-fn find_xmas(input: Dict(Coord, String), part: Int, x: Int, y: Int) {
-  let h =
-    list.range(0, 3)
-    |> list.filter_map(fn(n) { dict.get(input, Coord(x + n, y)) })
-  let v =
-    list.range(0, 3)
-    |> list.filter_map(fn(n) { dict.get(input, Coord(x, y + n)) })
-  let diag_r =
-    list.range(0, 3)
-    |> list.filter_map(fn(n) { dict.get(input, Coord(x + n, y + n)) })
-  let diag_l =
-    list.range(0, 3)
-    |> list.filter_map(fn(n) { dict.get(input, Coord(x - n, y + n)) })
+fn get_neighbours(input: Dict(Coord, String), ns: Int, f: fn(Int) -> Coord) {
+  list.range(0, ns)
+  |> list.filter_map(fn(n) { dict.get(input, f(n)) })
+  |> string.join("")
+}
 
-  let diag_d =
-    list.range(0, 2)
-    |> list.filter_map(fn(n) { dict.get(input, Coord(x + n, y + n)) })
-  let diag_u =
-    list.range(0, 2)
-    |> list.filter_map(fn(n) { dict.get(input, Coord(x + n, y + 2 - n)) })
+fn find_xmas(input: Dict(Coord, String), part: Int, x: Int, y: Int) {
+  let ho = get_neighbours(input, 3, fn(n) { Coord(x + n, y) })
+  let ve = get_neighbours(input, 3, fn(n) { Coord(x, y + n) })
+
+  let dr = get_neighbours(input, 3, fn(n) { Coord(x + n, y + n) })
+  let dl = get_neighbours(input, 3, fn(n) { Coord(x - n, y + n) })
+
+  let dd = get_neighbours(input, 2, fn(n) { Coord(x + n, y + n) })
+  let du = get_neighbours(input, 2, fn(n) { Coord(x + n, y + 2 - n) })
 
   case part {
-    1 ->
-      [h, v, diag_r, diag_l]
-      |> list.count(fn(w) {
-        list.contains(["XMAS", "SAMX"], string.join(w, ""))
-      })
+    1 -> [ho, ve, dr, dl] |> list.count(fn(w) { "XMAS" == w || "SAMX" == w })
     _ ->
-      case [diag_d, diag_u] |> list.map(string.join(_, "")) {
-        ["MAS", "MAS"] | ["SAM", "SAM"] -> 1
-        ["MAS", "SAM"] | ["SAM", "MAS"] -> 1
-        _ -> 0
+      case dd, du {
+        "MAS", "MAS" | "SAM", "SAM" -> 1
+        "MAS", "SAM" | "SAM", "MAS" -> 1
+        _, _ -> 0
       }
   }
 }
