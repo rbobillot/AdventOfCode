@@ -8,52 +8,59 @@ pub type Coord {
   Coord(x: Int, y: Int)
 }
 
-pub fn part2(_input: Dict(Coord, String)) {
-  -1
-}
-
-fn find_words_in_neighbours(
-  ws: List(String),
-  input: Dict(Coord, String),
-  x: Int,
-  y: Int,
-) {
+fn find_xmas(input: Dict(Coord, String), part: Int, x: Int, y: Int) {
   let h =
     list.range(0, 3)
     |> list.filter_map(fn(n) { dict.get(input, Coord(x + n, y)) })
   let v =
     list.range(0, 3)
     |> list.filter_map(fn(n) { dict.get(input, Coord(x, y + n)) })
-  let dr =
+  let diag_r =
     list.range(0, 3)
     |> list.filter_map(fn(n) { dict.get(input, Coord(x + n, y + n)) })
-  let dl =
+  let diag_l =
     list.range(0, 3)
     |> list.filter_map(fn(n) { dict.get(input, Coord(x - n, y + n)) })
 
-  [h, v, dr, dl]
-  |> list.count(fn(w) { list.contains(ws, string.join(w, "")) })
+  let diag_d =
+    list.range(0, 2)
+    |> list.filter_map(fn(n) { dict.get(input, Coord(x + n, y + n)) })
+  let diag_u =
+    list.range(0, 2)
+    |> list.filter_map(fn(n) { dict.get(input, Coord(x + n, y + 2 - n)) })
+
+  case part {
+    1 ->
+      [h, v, diag_r, diag_l]
+      |> list.count(fn(w) {
+        list.contains(["XMAS", "SAMX"], string.join(w, ""))
+      })
+    _ ->
+      case [diag_d, diag_u] |> list.map(string.join(_, "")) {
+        ["MAS", "MAS"] | ["SAM", "SAM"] -> 1
+        ["MAS", "SAM"] | ["SAM", "MAS"] -> 1
+        _ -> 0
+      }
+  }
 }
 
-fn tr_solve_part1(input: Dict(Coord, String), x: Int, y: Int, res: Int) {
+fn tr_solve(input: Dict(Coord, String), part: Int, x: Int, y: Int, res: Int) {
   case dict.get(input, Coord(x, y)) {
     Error(_) ->
       case dict.get(input, Coord(0, y + 1)) {
         Error(_) -> res
-        Ok(_) -> tr_solve_part1(input, 0, y + 1, res)
+        Ok(_) -> tr_solve(input, part, 0, y + 1, res)
       }
-    Ok(_) ->
-      tr_solve_part1(
-        input,
-        x + 1,
-        y,
-        res + find_words_in_neighbours(["XMAS", "SAMX"], input, x, y),
-      )
+    Ok(_) -> tr_solve(input, part, x + 1, y, res + find_xmas(input, part, x, y))
   }
 }
 
+pub fn part2(input: Dict(Coord, String)) {
+  tr_solve(input, 2, 0, 0, 0)
+}
+
 pub fn part1(input: Dict(Coord, String)) {
-  tr_solve_part1(input, 0, 0, 0)
+  tr_solve(input, 1, 0, 0, 0)
 }
 
 fn to_cells(input: List(List(String)), x: Int, y: Int, res: Dict(Coord, String)) {
