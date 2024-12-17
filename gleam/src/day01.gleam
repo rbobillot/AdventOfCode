@@ -28,7 +28,7 @@ pub fn part1(xs: List(Int), ys: List(Int)) -> Int {
   |> int.sum
 }
 
-pub fn day1(input: String) -> List(Int) {
+pub fn day01(input: String) -> List(Int) {
   let assert [xs, ys] =
     input
     |> utils.clean_input_lines
@@ -41,6 +41,6 @@ pub fn day1(input: String) -> List(Int) {
 
 pub fn main() {
   utils.get_input(day: 1)
-  |> day1
+  |> day01
   |> list.each(io.debug)
 }

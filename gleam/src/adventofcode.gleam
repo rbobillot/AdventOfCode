@@ -1,10 +1,10 @@
-import day1
-import day2
-import day3
-import day4
-import day5
-import day6
-import day7
+import day01
+import day02
+import day03
+import day04
+import day05
+import day06
+import day07
 import gleam/int
 import gleam/io
 import gleam/list
@@ -41,13 +41,13 @@ pub fn main() {
   io.println("Advent Of Code 2024")
 
   let run_steps = [
-    RunStep("day1", day1.day1),
-    RunStep("day2", day2.day2),
-    RunStep("day3", day3.day3),
-    RunStep("day4", day4.day4),
-    RunStep("day5", day5.day5),
-    RunStep("day6", day6.day6),
-    RunStep("day7", day7.day7),
+    RunStep("day01", day01.day01),
+    RunStep("day02", day02.day02),
+    RunStep("day03", day03.day03),
+    RunStep("day04", day04.day04),
+    RunStep("day05", day05.day05),
+    RunStep("day06", day06.day06),
+    RunStep("day07", day07.day07),
   ]
 
   run_steps |> list.each(run)

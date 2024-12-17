@@ -63,7 +63,7 @@ fn to_cells(input: List(List(String)), x: Int, y: Int, res: Dict(Coord, String))
   }
 }
 
-pub fn day4(input: String) -> List(Int) {
+pub fn day04(input: String) -> List(Int) {
   let input =
     input
     |> utils.clean_input_lines
@@ -75,6 +75,6 @@ pub fn day4(input: String) -> List(Int) {
 
 pub fn main() {
   utils.get_input(day: 4)
-  |> day4
+  |> day04
   |> list.each(io.debug)
 }

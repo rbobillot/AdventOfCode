@@ -1,4 +1,4 @@
-import day1
+import day01
 import gleeunit/should
 
 const input = "
@@ -10,11 +10,11 @@ const input = "
   3   3
   "
 
-pub fn day1_test() {
+pub fn day01_test() {
   let part1 = 11
   let part2 = 31
 
   input
-  |> day1.day1
+  |> day01.day01
   |> should.equal([part1, part2])
 }

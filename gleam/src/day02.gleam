@@ -52,7 +52,7 @@ pub fn part1(input: List(List(Int))) -> Int {
   list.count(input, fn(r) { 0 == is_safe_report(r) })
 }
 
-pub fn day2(input: String) -> List(Int) {
+pub fn day02(input: String) -> List(Int) {
   let report_lines =
     input
     |> utils.clean_input_lines
@@ -63,6 +63,6 @@ pub fn day2(input: String) -> List(Int) {
 
 pub fn main() {
   utils.get_input(day: 2)
-  |> day2
+  |> day02
   |> list.each(io.debug)
 }

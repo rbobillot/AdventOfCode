@@ -33,12 +33,12 @@ pub fn part1(input: String) {
   sum_every_mul(input)
 }
 
-pub fn day3(input: String) {
+pub fn day03(input: String) {
   [part1(input), part2(input)]
 }
 
 pub fn main() {
   utils.get_input(day: 3)
-  |> day3
+  |> day03
   |> list.each(io.debug)
 }

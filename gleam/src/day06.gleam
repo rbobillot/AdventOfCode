@@ -92,7 +92,7 @@ pub fn part1(cells: Dict(Coord, String), start: Coord) {
   traverse_cells(start, 0, cells, [])
 }
 
-pub fn day6(input: String) -> List(Int) {
+pub fn day06(input: String) -> List(Int) {
   let input =
     input
     |> utils.clean_input_lines
@@ -106,6 +106,6 @@ pub fn day6(input: String) -> List(Int) {
 
 pub fn main() {
   utils.get_input(day: 6)
-  |> day6
+  |> day06
   |> list.each(io.debug)
 }

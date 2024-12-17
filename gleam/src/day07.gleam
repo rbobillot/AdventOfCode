@@ -44,7 +44,7 @@ pub fn part1(input: List(#(Int, List(Int)))) {
   total_calibrations(input, [int.add, int.multiply]) |> int.sum
 }
 
-pub fn day7(input: String) -> List(Int) {
+pub fn day07(input: String) -> List(Int) {
   let input =
     input
     |> utils.clean_input_lines
@@ -64,6 +64,6 @@ pub fn day7(input: String) -> List(Int) {
 
 pub fn main() {
   utils.get_input(day: 7)
-  |> day7
+  |> day07
   |> list.each(io.debug)
 }

@@ -74,7 +74,7 @@ pub fn part1(orders: Dict(Int, List(Int)), updates: List(List(Int))) {
   |> compute_middle_pages
 }
 
-pub fn day5(input: String) -> List(Int) {
+pub fn day05(input: String) -> List(Int) {
   let assert [orders, updates] =
     input
     |> utils.clean_input_lines
@@ -91,6 +91,6 @@ pub fn day5(input: String) -> List(Int) {
 
 pub fn main() {
   utils.get_input(day: 5)
-  |> day5
+  |> day05
   |> list.each(io.debug)
 }
